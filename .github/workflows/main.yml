@@ -1,0 +1,27 @@
+name: Daily Dark Psychology Video
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 12 * * *"
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare daily content
+        run: |
+          mkdir -p output
+          echo "Dark Psychology Video Project" > output/status.txt
+          echo "Workflow ran successfully." >> output/status.txt
+          date -u >> output/status.txt
+
+      - name: Save output
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-video-status
+          path: output/status.txt
